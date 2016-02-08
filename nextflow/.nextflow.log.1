@@ -1,0 +1,142 @@
+Feb-08 03:18:29.113 [main] DEBUG nextflow.cli.Launcher - $> /usr/local/bin/nextflow example.nf
+Feb-08 03:18:29.510 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.17.2
+Feb-08 03:18:29.517 [main] INFO  nextflow.cli.CmdRun - Launching example.nf
+Feb-08 03:18:30.879 [main] DEBUG nextflow.Session - Session uuid: ad095c1c-0f3e-4167-b906-cdc0a7e54155
+Feb-08 03:18:30.888 [main] DEBUG nextflow.Session - Executor pool size: 2
+Feb-08 03:18:30.935 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.17.2 build 3480
+  Modified: 02-02-2016 17:05 UTC 
+  System: Linux 2.6.32-573.12.1.el6.x86_64
+  Runtime: Groovy 2.4.5 on OpenJDK 64-Bit Server VM 1.7.0_95-mockbuild_2016_01_21_15_45-b00
+  Encoding: UTF-8 (UTF-8)
+  Process: 5616@localhost.localdomain [127.0.0.1]
+
+Feb-08 03:18:30.971 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /vagrant/bioinformatics-workflows/nextflow/bin
+Feb-08 03:18:30.976 [main] DEBUG nextflow.Session - Session start invoked
+Feb-08 03:18:30.999 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+Feb-08 03:18:31.004 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+Feb-08 03:18:31.719 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Feb-08 03:18:32.413 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Feb-08 03:18:32.414 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Feb-08 03:18:32.442 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Feb-08 03:18:32.456 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+Feb-08 03:18:32.488 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'local' > capacity: 2; pollInterval: 100ms; dumpInterval: 5m 
+Feb-08 03:18:32.511 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: TaskPollingMonitor
+Feb-08 03:18:32.513 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Feb-08 03:18:32.534 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+Feb-08 03:18:32.969 [main] DEBUG nextflow.Session - >>> barrier register (process: bwa_map)
+Feb-08 03:18:33.032 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > bwa_map -- maxForks: 2
+Feb-08 03:18:33.058 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Feb-08 03:18:33.063 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Feb-08 03:18:33.064 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Feb-08 03:18:33.067 [main] DEBUG nextflow.Session - >>> barrier register (process: samtools_sort)
+Feb-08 03:18:33.123 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > samtools_sort -- maxForks: 2
+Feb-08 03:18:33.135 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: null
+Feb-08 03:18:33.140 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+Feb-08 03:18:33.150 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+Feb-08 03:18:33.178 [main] DEBUG nextflow.Session - >>> barrier register (process: samtools_index)
+Feb-08 03:18:33.241 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > samtools_index -- maxForks: 2
+Feb-08 03:18:33.244 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Feb-08 03:18:33.247 [main] DEBUG nextflow.Session - Session await
+Feb-08 03:18:33.647 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [5f/5feb2f] Submitted process > bwa_map (2)
+Feb-08 03:18:33.650 [Actor Thread 3] INFO  nextflow.processor.TaskDispatcher - [94/c1acb3] Submitted process > bwa_map (1)
+Feb-08 03:18:33.665 [Actor Thread 1] DEBUG n.processor.ParallelTaskProcessor - <bwa_map> Poison pill arrived
+Feb-08 03:18:33.671 [Actor Thread 2] DEBUG nextflow.processor.StateObj - <bwa_map> State before poison: StateObj[submitted: 3; completed: 0; poisoned: false; allScalar: false]
+Feb-08 03:18:33.890 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [4f/9d261c] Submitted process > bwa_map (3)
+Feb-08 03:18:33.947 [Thread-2] DEBUG nextflow.processor.TaskRun - Unable to dump output of process 'null' -- Cause: java.nio.file.NoSuchFileException: /vagrant/bioinformatics-workflows/nextflow/work/94/c1acb3f20db7b3eeb897eb2583a25b/.command.out
+Feb-08 03:18:33.960 [Thread-2] DEBUG nextflow.processor.TaskRun - Unable to dump error of process 'null' -- Cause: java.nio.file.NoSuchFileException: /vagrant/bioinformatics-workflows/nextflow/work/94/c1acb3f20db7b3eeb897eb2583a25b/.command.err
+Feb-08 03:18:33.988 [Thread-2] ERROR nextflow.processor.TaskProcessor - Error executing process > 'bwa_map (1)'
+
+Caused by:
+  Process 'bwa_map (1)' terminated with an error exit status
+
+Command executed:
+
+  bwa mem /vagrant/bioinformatics-workflows/nextflow/data/genome.fa /vagrant/bioinformatics-workflows/nextflow/data/samples/A.fastq | samtools view -Sb -> /vagrant/bioinformatics-workflows/nextflow/mapped_reads/A.bam
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Work dir:
+  /vagrant/bioinformatics-workflows/nextflow/work/94/c1acb3f20db7b3eeb897eb2583a25b
+
+Tip: view the complete command output by changing to the process work dir and entering the command: 'cat .command.out'
+nextflow.exception.ProcessFailedException: Process 'bwa_map (1)' terminated with an error exit status
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:1.7.0_95]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526) ~[na:1.7.0_95]
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:80) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.reflection.CachedConstructor.doConstructorInvoke(CachedConstructor.java:74) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrap.callConstructor(ConstructorSite.java:84) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:60) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:235) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:247) [groovy-2.4.5.jar:2.4.5]
+	at nextflow.processor.TaskProcessor.finalizeTask(TaskProcessor.groovy:1643) ~[nextflow-0.17.2.jar:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_95]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_95]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:210) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.call(PogoMetaMethodSite.java:71) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:113) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125) [groovy-2.4.5.jar:2.4.5]
+	at nextflow.processor.TaskPollingMonitor.checkTaskStatus(TaskPollingMonitor.groovy:445) [nextflow-0.17.2.jar:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_95]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_95]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:210) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:59) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:166) [groovy-2.4.5.jar:2.4.5]
+	at nextflow.processor.TaskPollingMonitor.checkAllTasks(TaskPollingMonitor.groovy:359) [nextflow-0.17.2.jar:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_95]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_95]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:210) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:59) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:158) [groovy-2.4.5.jar:2.4.5]
+	at nextflow.processor.TaskPollingMonitor.pollLoop(TaskPollingMonitor.groovy:307) [nextflow-0.17.2.jar:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_95]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_95]
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:384) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:69) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52) ~[groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:158) [groovy-2.4.5.jar:2.4.5]
+	at nextflow.processor.TaskPollingMonitor$_start_closure6.doCall(TaskPollingMonitor.groovy:283) [nextflow-0.17.2.jar:na]
+	at nextflow.processor.TaskPollingMonitor$_start_closure6.doCall(TaskPollingMonitor.groovy) [nextflow-0.17.2.jar:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.7.0_95]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[na:1.7.0_95]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.7.0_95]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[na:1.7.0_95]
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325) [groovy-2.4.5.jar:2.4.5]
+	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:294) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.Closure.call(Closure.java:426) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.Closure.call(Closure.java:420) [groovy-2.4.5.jar:2.4.5]
+	at groovy.lang.Closure.run(Closure.java:507) [groovy-2.4.5.jar:2.4.5]
+	at java.lang.Thread.run(Thread.java:745) [na:1.7.0_95]
+Feb-08 03:18:34.055 [Thread-2] DEBUG nextflow.Session - Session aborted -- Cause: nextflow.exception.ProcessFailedException: Process 'bwa_map (1)' terminated with an error exit status
+Feb-08 03:18:34.064 [main] DEBUG nextflow.Session - Session await > processes completed
+Feb-08 03:18:34.066 [main] DEBUG nextflow.Session - Session await > done
+Feb-08 03:18:34.067 [Actor Thread 4] DEBUG n.processor.ParallelTaskProcessor - <bwa_map> After stop
+Feb-08 03:18:34.070 [Actor Thread 1] DEBUG n.processor.ParallelTaskProcessor - <samtools_sort> After stop
+Feb-08 03:18:34.072 [Actor Thread 4] DEBUG n.processor.ParallelTaskProcessor - <samtools_index> After stop
+Feb-08 03:18:34.076 [main] DEBUG nextflow.processor.TaskRun - Unable to dump error of process 'null' -- Cause: java.nio.file.NoSuchFileException: /vagrant/bioinformatics-workflows/nextflow/work/94/c1acb3f20db7b3eeb897eb2583a25b/.command.err
+Feb-08 03:18:34.082 [main] DEBUG nextflow.processor.TaskRun - Unable to dump output of process 'null' -- Cause: java.nio.file.NoSuchFileException: /vagrant/bioinformatics-workflows/nextflow/work/94/c1acb3f20db7b3eeb897eb2583a25b/.command.out
+Feb-08 03:18:34.100 [Actor Thread 2] DEBUG nextflow.processor.TaskProcessor - <bwa_map> Sending poison pills and terminating process
+Feb-08 03:18:34.104 [Thread-2] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+Feb-08 03:18:34.110 [Actor Thread 2] DEBUG nextflow.Session - <<< barrier arrive (process: bwa_map)
+Feb-08 03:18:34.132 [main] DEBUG nextflow.Session - Session destroyed

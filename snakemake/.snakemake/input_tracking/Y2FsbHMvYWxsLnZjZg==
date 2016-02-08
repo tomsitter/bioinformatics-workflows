@@ -1,0 +1,7 @@
+data/genome.fa
+sorted_reads/A.bam
+sorted_reads/A.bam.bai
+sorted_reads/B.bam
+sorted_reads/B.bam.bai
+sorted_reads/C.bam
+sorted_reads/C.bam.bai

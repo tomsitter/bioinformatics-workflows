@@ -1,0 +1,215 @@
+''' This script is a simple sequence alignment workflow using snakemake
+    Taken from http://snakemake.bitbucket.org/snakemake-tutorial.html
+
+'''
+
+# The workflow is constructed from a directed acyclic graph (DAG)
+# Snakemake looks at input/output file dependencies and works back from there
+
+SAMPLES, = glob_wildcards("data/samples/{sample}.fastq")
+
+# If no target file passed to snakemake, it will use the first rule
+rule all:
+    input:
+        "report.html"
+
+rule bwa_map:
+    input:
+        "data/genome.fa",
+        "data/samples/{sample}.fastq",
+    output:
+        "mapped_reads/{sample}.bam"
+    shell:
+        "bwa mem {input} | samtools view -Sb - > {output}"
+
+
+rule samtools_sort:
+    input:
+        "mapped_reads/{sample}.bam"
+    output:
+        "sorted_reads/{sample}.bam"
+    shell:
+        "samtools sort -T sorted_reads/{wildcards.sample} "
+        "-O bam {input} > {output}"
+
+
+rule samtools_index:
+    input:
+        "sorted_reads/{sample}.bam"
+    output:
+        "sorted_reads/{sample}.bam.bai"
+    shell:
+        "samtools index {input}"
+
+
+rule bcftools_call:
+    input:
+        fa="data/genome.fa",
+        bam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),
+        bai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES)
+    output:
+        "calls/all.vcf"
+    shell:
+        "samtools mpileup -g -f {input.fa} {input.bam} | "
+        "bcftools call -mv - > {output}"
+
+
+rule report:
+    input:
+        "calls/all.vcf"
+    output:
+        "report.html"
+    run:
+        from snakemake.utils import report
+        with open(input[0]) as vcf:
+            n_calls = sum(1 for l in vcf if not l.startswith("#"))
+
+        report("""
+        An example variant calling workflow
+        ===================================
+
+        Reads were mapped to the Yeast
+        reference genome and variants were called jointly with
+        SAMtools/BCFtools.
+
+        This resulted in {n_calls} variants (see Table T1_).
+        """, output[0], T1=input[0])
+
+
+
+########################
+# Example output below #
+########################
+
+
+'''
+> snakemake -n # This is a "dryrun" of what will happen
+
+rule bwa_map:
+        input: data/genome.fa, data/samples/C.fastq
+        output: mapped_reads/C.bam
+rule bwa_map:
+        input: data/genome.fa, data/samples/B.fastq
+        output: mapped_reads/B.bam
+rule bwa_map:
+        input: data/genome.fa, data/samples/A.fastq
+        output: mapped_reads/A.bam
+rule samtools_sort:
+        input: mapped_reads/B.bam
+        output: sorted_reads/B.bam
+rule samtools_sort:
+        input: mapped_reads/A.bam
+        output: sorted_reads/A.bam
+rule samtools_sort:
+        input: mapped_reads/C.bam
+        output: sorted_reads/C.bam
+rule samtools_index:
+        input: sorted_reads/A.bam
+        output: sorted_reads/A.bam.bai
+rule samtools_index:
+        input: sorted_reads/B.bam
+        output: sorted_reads/B.bam.bai
+rule samtools_index:
+        input: sorted_reads/C.bam
+        output: sorted_reads/C.bam.bai
+rule bcftools_call:
+        input: data/genome.fa, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/C.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai, sorted_reads/C.bam.bai
+        output: calls/all.vcf
+rule report:
+        input: calls/all.vcf
+        output: report.html
+localrule all:
+        input: report.html
+Job counts:
+        count   jobs
+        1       all
+        1       bcftools_call
+        3       bwa_map
+        1       report
+        3       samtools_index
+        3       samtools_sort
+        12
+'''
+
+'''
+> snakemake #This will actually run the workflow
+
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       all
+        1       bcftools_call
+        3       bwa_map
+        1       report
+        3       samtools_index
+        3       samtools_sort
+        12
+rule bwa_map:
+        input: data/genome.fa, data/samples/C.fastq
+        output: mapped_reads/C.bam
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 25000 sequences (2525000 bp)...
+[M::mem_process_seqs] Processed 25000 reads in 3.276 CPU sec, 3.278 real sec
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa mem data/genome.fa data/samples/C.fastq
+[main] Real time: 4.563 sec; CPU: 3.410 sec
+1 of 12 steps (8%) done
+rule bwa_map:
+        input: data/genome.fa, data/samples/B.fastq
+        output: mapped_reads/B.bam
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 25000 sequences (2525000 bp)...
+[M::mem_process_seqs] Processed 25000 reads in 3.798 CPU sec, 3.803 real sec
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa mem data/genome.fa data/samples/B.fastq
+[main] Real time: 5.330 sec; CPU: 3.899 sec
+2 of 12 steps (17%) done
+rule bwa_map:
+        input: data/genome.fa, data/samples/A.fastq
+        output: mapped_reads/A.bam
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 25000 sequences (2525000 bp)...
+[M::mem_process_seqs] Processed 25000 reads in 3.523 CPU sec, 3.527 real sec
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa mem data/genome.fa data/samples/A.fastq
+[main] Real time: 4.768 sec; CPU: 3.657 sec
+3 of 12 steps (25%) done
+rule samtools_sort:
+        input: mapped_reads/C.bam
+        output: sorted_reads/C.bam
+4 of 12 steps (33%) done
+rule samtools_sort:
+        input: mapped_reads/B.bam
+        output: sorted_reads/B.bam
+5 of 12 steps (42%) done
+rule samtools_sort:
+        input: mapped_reads/A.bam
+        output: sorted_reads/A.bam
+6 of 12 steps (50%) done
+rule samtools_index:
+        input: sorted_reads/B.bam
+        output: sorted_reads/B.bam.bai
+7 of 12 steps (58%) done
+rule samtools_index:
+        input: sorted_reads/C.bam
+        output: sorted_reads/C.bam.bai
+8 of 12 steps (67%) done
+rule samtools_index:
+        input: sorted_reads/A.bam
+        output: sorted_reads/A.bam.bai
+9 of 12 steps (75%) done
+rule bcftools_call:
+        input: sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/C.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai, sorted_reads/C.bam.bai, data/genome.fa
+        output: calls/all.vcf
+[mpileup] 3 samples in 3 input files
+<mpileup> Set max per-file depth to 2666
+10 of 12 steps (83%) done
+rule report:
+        input: calls/all.vcf
+        output: report.html
+11 of 12 steps (92%) done
+localrule all:
+        input: report.html
+12 of 12 steps (100%) done
+'''

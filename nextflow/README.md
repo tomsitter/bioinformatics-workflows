@@ -31,8 +31,19 @@ We should move it somewhere to make it callable
 nextflow version 0.17.2.3480
 ```
 
+## Usage
 
-# Usage
+In order to run the example workflow you will need the bioinformatics tools installed.  
+See the snakemake README.md for instructions on installing the tools using conda
+
+Download the example.nf and the data directory to a workspace.  
+For our example we will also need to make two directories to store results  
+We can now run our workflow using the nextflow command  
+```
+> cd workspace
+> mkdir mapped_reads sorted_reads
+> nextflow example.nf
+```
 
 ## Passing in parameters
 ```

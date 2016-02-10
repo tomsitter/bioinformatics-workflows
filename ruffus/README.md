@@ -7,6 +7,12 @@ Online documentation available at: http://www.ruffus.org.uk/contents.html
 
 Github repository available at: https://github.com/bunbun/ruffus
 
+## Installation environment
+
+Installation environment is a vagrant machine puphpet/centos65-x64
+
+CentOS release 6.7 (Final)  2.6.32-573.12.1.el6.x86_64
+
 ## Installation
 
 ruffus is available as a Python 2 or 3 pip package.

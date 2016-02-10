@@ -1,5 +1,7 @@
 # nextflow installation
-See https://github.com/nextflow-io/nextflow for more information
+
+Homepage: http://www.nextflow.io/  
+Github Repo: https://github.com/nextflow-io/nextflow
 
 ## Installation environment
 

@@ -89,3 +89,33 @@ process big_job {
 }
 ```
 
+### Specify working directory
+
+The NXT_WORK environmental variable can be used to set the working directory
+```
+> export NXT_WORK='/scratch/nextflow'
+```
+
+### Logging all commands run
+
+The ability to log each command run is not yet available. I have put in a feature request
+
+A current workaround is to traverse the work/ directory and extract the .command.sh contents  
+HOWEVER, this directory can contain the work from multiple runs so it is important to only navigate to directories for the run of interest.  
+You can generate a trace file using the -with-trace flag. This file will list the working directory of each task in the current workflow.
+```
+> nextflow example.nf -with-trace
+> cat trace.txt
+task_id hash    native_id       name    status  exit    submit  duration        realtime        %cpu    rss     vmem   wcharr
+2       6b/cf40ba       2823    bwa_map (2)     COMPLETED       0       2016-02-10 17:12:21.436 6.1s    2.9s    33.0%  97 BMBMB
+1       24/0853ba       2824    bwa_map (1)     COMPLETED       0       2016-02-10 17:12:21.428 6.4s    3s      21.0%  97 BMBMB
+3       e1/118e5d       3141    bwa_map (3)     COMPLETED       0       2016-02-10 17:12:27.532 5.8s    2.1s    18.0%  97 BMBMB
+4       ed/cc5cb9       3208    samtools_sort (1)       COMPLETED       0       2016-02-10 17:12:27.832 5.7s    966ms  1.3 MBMB
+5       38/900a7d       3415    samtools_sort (2)       COMPLETED       0       2016-02-10 17:12:33.320 5.6s    767ms  1.3 MBMB
+7       3b/901f0a       3648    samtools_index (1)      COMPLETED       0       2016-02-10 17:12:38.898 187ms   80ms   0.7 KBMB
+6       a4/116f00       3468    samtools_sort (3)       COMPLETED       0       2016-02-10 17:12:33.500 5.6s    830ms  1.2 MBMB
+8       3c/40ad43       3701    samtools_index (2)      COMPLETED       0       2016-02-10 17:12:39.087 125ms   97ms   --
+9       a3/50699b       3722    samtools_index (3)      COMPLETED       0       2016-02-10 17:12:39.121 120ms   34ms   --
+```
+
+The hash column has the working directory. A simple python script can parse this file and compile the commands.

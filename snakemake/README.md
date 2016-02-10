@@ -3,6 +3,12 @@
 Johannes Köster and Sven Rahmann. *Snakemake—a scalable bioinformatics workflow engine*. Bioinformatics (2012) 28 (19): 2520-2522.
 http://bioinformatics.oxfordjournals.org/content/28/19/2520.abstract
 
+## Installation environment
+
+Installation environment is a vagrant machine puphpet/centos65-x64
+
+CentOS release 6.7 (Final)  2.6.32-573.12.1.el6.x86_64
+
 ## Installation
 
 Documentation: https://bitbucket.org/snakemake/snakemake/wiki/Documentation

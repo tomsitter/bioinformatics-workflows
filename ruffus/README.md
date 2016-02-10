@@ -4,6 +4,7 @@ Goodstadt L. *Ruffus: a lightweight Python library for computational pipelines*.
 http://www.ncbi.nlm.nih.gov/pubmed/20847218
 
 Online documentation available at: http://www.ruffus.org.uk/contents.html
+
 Github repository available at: https://github.com/bunbun/ruffus
 
 ## Installation

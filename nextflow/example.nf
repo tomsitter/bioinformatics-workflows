@@ -14,6 +14,8 @@ sequences = file(params.in)
 genome_file = file(params.genome)
 
 process bwa_map {
+    publishDir "$baseDir/mapped_reads/"
+    
     input:
     file genome_file
     file fastq from sequences
@@ -22,12 +24,13 @@ process bwa_map {
     file "${fastq.baseName}.bam" into mapped_reads
 
     """
-    bwa mem $baseDir/data/$genome_file $baseDir/data/samples/$fastq | samtools view -Sb -> ${fastq.baseName}.bam
-    cp ${fastq.baseName}.bam $baseDir/mapped_reads/
+    bwa mem $genome_file $fastq | samtools view -Sb -> ${fastq.baseName}.bam
     """
 }
 
 process samtools_sort {
+    publishDir "$baseDir/sorted_reads" 
+    
     input:
         file bamfile from mapped_reads
     output:
@@ -36,18 +39,18 @@ process samtools_sort {
     """
     mkdir sorted
     samtools sort -T ${bamfile.baseName} -O bam $bamfile > sorted/$bamfile
-    cp sorted/$bamfile $baseDir/sorted_reads/$bamfile
     """
 }
 
 
 process samtools_index {
+    publishDir "$baseDir/sorted_reads/" 
+    
     input:
         file sorted from sorted_reads
-
+    output: 
+        file "${sorted}.bai" 
     """
     samtools index $sorted
-    cp ${sorted}.bai $baseDir/sorted_reads/${sorted}.bai
     """
 }
-
